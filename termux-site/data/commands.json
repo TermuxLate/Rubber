@@ -1,0 +1,532 @@
+[
+  {
+    "name": "pkg",
+    "category": "Пакетный менеджер",
+    "summary": "Высокоуровневая обёртка над apt для установки и обновления пакетов в Termux.",
+    "description": "Команда pkg упрощает работу с пакетами: установка, обновление, удаление и поиск. Является дружественной обёрткой над apt и поддерживает подкоманды install, upgrade, search и т.д.",
+    "syntax": "pkg [подкоманда] [аргументы]",
+    "options": [
+      { "flag": "install <пакет>", "desc": "Установить пакет" },
+      { "flag": "upgrade", "desc": "Обновить установленные пакеты" },
+      { "flag": "search <запрос>", "desc": "Поиск пакета" },
+      { "flag": "list-all", "desc": "Список всех доступных пакетов" }
+    ],
+    "examples": [
+      { "desc": "Обновить индексы и пакеты", "cmd": "pkg update && pkg upgrade" },
+      { "desc": "Установить git", "cmd": "pkg install git" }
+    ],
+    "related": ["apt", "dpkg"],
+    "tags": ["установка", "обновление", "поиск"]
+  },
+  {
+    "name": "apt",
+    "category": "Пакетный менеджер",
+    "summary": "Низкоуровневая утилита управления пакетами (Debian/Ubuntu стиль).",
+    "description": "Используется для установки, обновления и удаления пакетов. В Termux работает поверх собственных репозиториев.",
+    "syntax": "apt [опции] [подкоманда]",
+    "options": [
+      { "flag": "update", "desc": "Обновить списки пакетов" },
+      { "flag": "upgrade", "desc": "Обновить установленные пакеты" },
+      { "flag": "install <пакет>", "desc": "Установить пакет" },
+      { "flag": "remove <пакет>", "desc": "Удалить пакет" },
+      { "flag": "search <запрос>", "desc": "Искать пакет" }
+    ],
+    "examples": [
+      { "desc": "Искать пакет curl", "cmd": "apt search curl" }
+    ],
+    "related": ["pkg", "dpkg"],
+    "tags": ["репозитории", "обновление"]
+  },
+  {
+    "name": "dpkg",
+    "category": "Пакетный менеджер",
+    "summary": "Низкоуровневая работа с .deb пакетами.",
+    "description": "Позволяет устанавливать, распаковывать и управлять отдельными .deb пакетами.",
+    "syntax": "dpkg [опции]",
+    "options": [
+      { "flag": "-i <файл.deb>", "desc": "Установить пакет из файла" },
+      { "flag": "-r <пакет>", "desc": "Удалить пакет" },
+      { "flag": "-L <пакет>", "desc": "Показать список файлов пакета" }
+    ],
+    "examples": [
+      { "desc": "Установить локальный deb-файл", "cmd": "dpkg -i package.deb" }
+    ],
+    "related": ["apt"],
+    "tags": ["deb"]
+  },
+  {
+    "name": "termux-change-repo",
+    "category": "Termux",
+    "summary": "Смена зеркал репозиториев для ускорения загрузки.",
+    "description": "Открывает TUI для выбора альтернативных зеркал репозиториев Termux. Полезно при медленном или нестабильном соединении.",
+    "syntax": "termux-change-repo",
+    "examples": [
+      { "desc": "Запустить интерфейс выбора зеркал", "cmd": "termux-change-repo" }
+    ],
+    "related": ["pkg", "apt"],
+    "tags": ["репозитории", "скорость"]
+  },
+  {
+    "name": "termux-setup-storage",
+    "category": "Termux",
+    "summary": "Настраивает доступ Termux к общей памяти устройства.",
+    "description": "Создаёт папку ~/storage и запрашивает системные разрешения для работы с общими каталогами Android (Downloads, DCIM и т.п.).",
+    "syntax": "termux-setup-storage",
+    "examples": [
+      { "desc": "Настроить доступ к памяти", "cmd": "termux-setup-storage" }
+    ],
+    "related": ["termux-open", "termux-share"],
+    "tags": ["файлы", "разрешения"]
+  },
+
+  {
+    "name": "termux-battery-status",
+    "category": "Termux API",
+    "summary": "Показывает состояние батареи устройства в формате JSON.",
+    "description": "Выводит уровень заряда, статус, температуру и прочие данные о батарее. Требуется установленный пакет termux-api.",
+    "syntax": "termux-battery-status",
+    "requires": ["termux-api"],
+    "examples": [
+      { "desc": "Посмотреть статус батареи", "cmd": "termux-battery-status | jq" }
+    ],
+    "related": ["termux-telephony-deviceinfo"],
+    "tags": ["питание", "json"]
+  },
+  {
+    "name": "termux-brightness",
+    "category": "Termux API",
+    "summary": "Управляет яркостью экрана.",
+    "description": "Позволяет установить яркость в диапазоне 0–255.",
+    "syntax": "termux-brightness [значение]",
+    "requires": ["termux-api"],
+    "examples": [
+      { "desc": "Установить яркость на 120", "cmd": "termux-brightness 120" }
+    ],
+    "related": ["termux-torch", "termux-volume"],
+    "tags": ["экран"]
+  },
+  {
+    "name": "termux-clipboard-get",
+    "category": "Termux API",
+    "summary": "Считывает текст из буфера обмена.",
+    "description": "Выводит содержимое системного буфера обмена.",
+    "syntax": "termux-clipboard-get",
+    "requires": ["termux-api"],
+    "examples": [ { "desc": "Скопировать буфер в файл", "cmd": "termux-clipboard-get > clip.txt" } ],
+    "related": ["termux-clipboard-set", "termux-share"],
+    "tags": ["буфер обмена"]
+  },
+  {
+    "name": "termux-clipboard-set",
+    "category": "Termux API",
+    "summary": "Помещает текст в буфер обмена.",
+    "description": "Читает текст из stdin и записывает в системный буфер обмена.",
+    "syntax": "echo 'текст' | termux-clipboard-set",
+    "requires": ["termux-api"],
+    "examples": [ { "desc": "Сохранить вывод команды в буфер", "cmd": "date | termux-clipboard-set" } ],
+    "related": ["termux-clipboard-get"],
+    "tags": ["буфер обмена"]
+  },
+  {
+    "name": "termux-camera-info",
+    "category": "Termux API",
+    "summary": "Информация о доступных камерах.",
+    "description": "Показывает список камер и их характеристики в JSON.",
+    "syntax": "termux-camera-info",
+    "requires": ["termux-api"],
+    "examples": [ { "desc": "Получить данные камер", "cmd": "termux-camera-info | jq" } ],
+    "related": ["termux-camera-photo"],
+    "tags": ["камера"]
+  },
+  {
+    "name": "termux-camera-photo",
+    "category": "Termux API",
+    "summary": "Делает фото и сохраняет в файл.",
+    "description": "Снимает изображение с камеры и сохраняет по указанному пути.",
+    "syntax": "termux-camera-photo -c 0 ~/storage/pictures/photo.jpg",
+    "requires": ["termux-api"],
+    "options": [
+      { "flag": "-c <id>", "desc": "ID камеры (обычно 0 или 1)" }
+    ],
+    "examples": [ { "desc": "Сделать снимок задней камерой", "cmd": "termux-camera-photo -c 0 photo.jpg" } ],
+    "related": ["termux-camera-info"],
+    "tags": ["камера", "фото"]
+  },
+  {
+    "name": "termux-dialog",
+    "category": "Termux API",
+    "summary": "Показывает системные диалоги и получает ввод пользователя.",
+    "description": "Можно показывать текстовые поля, подтверждения, выбор из списка.",
+    "syntax": "termux-dialog [--title T] [--text TEXT] [--checkbox] ...",
+    "requires": ["termux-api"],
+    "examples": [ { "desc": "Простое подтверждение", "cmd": "termux-dialog -t 'Вопрос' --yes-no" } ],
+    "tags": ["диалог"]
+  },
+  {
+    "name": "termux-download",
+    "category": "Termux API",
+    "summary": "Скачивает файл по URL с использованием системного загрузчика.",
+    "description": "Использует Android Download Manager. Фоновые загрузки продолжаются при сворачивании.",
+    "syntax": "termux-download URL",
+    "requires": ["termux-api"],
+    "examples": [ { "desc": "Скачать файл", "cmd": "termux-download https://example.com/file.zip" } ],
+    "tags": ["загрузка", "интернет"]
+  },
+  {
+    "name": "termux-fingerprint",
+    "category": "Termux API",
+    "summary": "Проверяет отпечаток пальца.",
+    "description": "Запускает системную аутентификацию по биометрии и возвращает результат.",
+    "syntax": "termux-fingerprint",
+    "requires": ["termux-api"],
+    "tags": ["безопасность"]
+  },
+  {
+    "name": "termux-infrared-frequencies",
+    "category": "Termux API",
+    "summary": "Показывает поддерживаемые ИК-частоты.",
+    "description": "Выводит частоты инфракрасного порта устройства (если поддерживается).",
+    "syntax": "termux-infrared-frequencies",
+    "requires": ["termux-api"],
+    "related": ["termux-infrared-transmit"],
+    "tags": ["infrared"]
+  },
+  {
+    "name": "termux-infrared-transmit",
+    "category": "Termux API",
+    "summary": "Передаёт ИК-сигнал.",
+    "description": "Посылает последовательность импульсов через ИК-порт.",
+    "syntax": "termux-infrared-transmit --frequency 38000 --pattern 100,200,100,200",
+    "requires": ["termux-api"],
+    "tags": ["infrared"]
+  },
+  {
+    "name": "termux-job-scheduler",
+    "category": "Termux API",
+    "summary": "Планировщик задач в фоне.",
+    "description": "Создаёт отложенные/периодические задачи, запускающие скрипты Termux.",
+    "syntax": "termux-job-scheduler --set --job-id 1 --script ~/script.sh --period-ms 60000",
+    "requires": ["termux-api"],
+    "tags": ["фон", "cron"]
+  },
+  {
+    "name": "termux-keystore",
+    "category": "Termux API",
+    "summary": "Доступ к Android Keystore.",
+    "description": "Создание и использование криптографических ключей Android Keystore.",
+    "syntax": "termux-keystore [list|generate|sign|...]",
+    "requires": ["termux-api"],
+    "tags": ["криптография"]
+  },
+  {
+    "name": "termux-location",
+    "category": "Termux API",
+    "summary": "Получение геолокации (GPS/сети).",
+    "description": "Возвращает координаты и точность в JSON.",
+    "syntax": "termux-location [--provider gps|network]",
+    "requires": ["termux-api"],
+    "tags": ["локация", "gps"]
+  },
+  {
+    "name": "termux-media-player",
+    "category": "Termux API",
+    "summary": "Воспроизведение аудио.",
+    "description": "Проигрывает медиафайлы через системный плеер.",
+    "syntax": "termux-media-player play ~/music/song.mp3",
+    "requires": ["termux-api"],
+    "tags": ["аудио"]
+  },
+  {
+    "name": "termux-media-scan",
+    "category": "Termux API",
+    "summary": "Индексирует файлы для медиатеки Android.",
+    "description": "Сообщает системе о новых медиафайлах для появления в галерее/плеере.",
+    "syntax": "termux-media-scan path1 [path2 ...]",
+    "requires": ["termux-api"],
+    "tags": ["медиа"]
+  },
+  {
+    "name": "termux-microphone-record",
+    "category": "Termux API",
+    "summary": "Запись звука с микрофона.",
+    "description": "Запускает запись аудио в файл.",
+    "syntax": "termux-microphone-record -f out.wav -d 10",
+    "requires": ["termux-api"],
+    "tags": ["аудио", "запись"]
+  },
+  {
+    "name": "termux-notification",
+    "category": "Termux API",
+    "summary": "Показывает системное уведомление.",
+    "description": "Создаёт уведомления с заголовком, текстом и действиями.",
+    "syntax": "termux-notification --title 'Заголовок' --content 'Текст'",
+    "requires": ["termux-api"],
+    "related": ["termux-notification-remove", "termux-toast"],
+    "tags": ["уведомления"]
+  },
+  {
+    "name": "termux-notification-remove",
+    "category": "Termux API",
+    "summary": "Удаляет уведомление по ID.",
+    "description": "Позволяет убрать ранее созданное уведомление.",
+    "syntax": "termux-notification-remove --id 1",
+    "requires": ["termux-api"],
+    "tags": ["уведомления"]
+  },
+  {
+    "name": "termux-open",
+    "category": "Termux API",
+    "summary": "Открывает файл/URL с помощью системных приложений.",
+    "description": "Запускает ассоциированное приложение для указанного файла или URL.",
+    "syntax": "termux-open file-or-url",
+    "requires": ["termux-api"],
+    "related": ["termux-open-url", "termux-share"],
+    "tags": ["файлы", "url"]
+  },
+  {
+    "name": "termux-open-url",
+    "category": "Termux API",
+    "summary": "Открывает URL в браузере.",
+    "description": "Эквивалент termux-open для ссылок.",
+    "syntax": "termux-open-url https://example.com",
+    "requires": ["termux-api"],
+    "related": ["termux-open"],
+    "tags": ["url"]
+  },
+  {
+    "name": "termux-sensor",
+    "category": "Termux API",
+    "summary": "Чтение данных датчиков (акселерометр и др.).",
+    "description": "Возвращает данные доступных сенсоров.",
+    "syntax": "termux-sensor -n 5",
+    "requires": ["termux-api"],
+    "tags": ["сенсоры"]
+  },
+  {
+    "name": "termux-share",
+    "category": "Termux API",
+    "summary": "Шаринг текста/файлов в другие приложения.",
+    "description": "Открывает системное окно «Поделиться».",
+    "syntax": "termux-share -a send -c 'Привет'",
+    "requires": ["termux-api"],
+    "tags": ["шаринг", "файлы"]
+  },
+  {
+    "name": "termux-sms-inbox",
+    "category": "Termux API",
+    "summary": "Чтение SMS (входящих).",
+    "description": "Выводит список SMS в JSON (требуются разрешения).",
+    "syntax": "termux-sms-inbox -l 10",
+    "requires": ["termux-api"],
+    "related": ["termux-sms-send", "termux-sms-list"],
+    "tags": ["sms"]
+  },
+  {
+    "name": "termux-sms-list",
+    "category": "Termux API",
+    "summary": "Список SMS по фильтрам.",
+    "description": "Более гибкий вывод SMS.",
+    "syntax": "termux-sms-list --box sent",
+    "requires": ["termux-api"],
+    "tags": ["sms"]
+  },
+  {
+    "name": "termux-sms-send",
+    "category": "Termux API",
+    "summary": "Отправка SMS.",
+    "description": "Посылает SMS указанному номеру.",
+    "syntax": "termux-sms-send -n +71234567890 'Привет из Termux'",
+    "requires": ["termux-api"],
+    "tags": ["sms"]
+  },
+  {
+    "name": "termux-storage-get",
+    "category": "Termux API",
+    "summary": "Диалог выбора файла и вывод его пути.",
+    "description": "Открывает системный файловый диалог и возвращает выбранный путь.",
+    "syntax": "termux-storage-get",
+    "requires": ["termux-api"],
+    "tags": ["файлы"]
+  },
+  {
+    "name": "termux-telephony-call",
+    "category": "Termux API",
+    "summary": "Совершение телефонного звонка.",
+    "description": "Запускает звонок на номер (требуются разрешения).",
+    "syntax": "termux-telephony-call +71234567890",
+    "requires": ["termux-api"],
+    "tags": ["телефония"]
+  },
+  {
+    "name": "termux-telephony-cellinfo",
+    "category": "Termux API",
+    "summary": "Информация о сотах оператора.",
+    "description": "Возвращает данные о вышках и сигнале.",
+    "syntax": "termux-telephony-cellinfo",
+    "requires": ["termux-api"],
+    "tags": ["телефония"]
+  },
+  {
+    "name": "termux-telephony-deviceinfo",
+    "category": "Termux API",
+    "summary": "Системная информация устройства.",
+    "description": "Возвращает модель, производителя, версию ОС и др.",
+    "syntax": "termux-telephony-deviceinfo",
+    "requires": ["termux-api"],
+    "tags": ["устройство"]
+  },
+  {
+    "name": "termux-toast",
+    "category": "Termux API",
+    "summary": "Короткое всплывающее сообщение (toast).",
+    "description": "Показывает краткое уведомление на экране.",
+    "syntax": "termux-toast 'Готово'",
+    "requires": ["termux-api"],
+    "related": ["termux-notification"],
+    "tags": ["уведомления"]
+  },
+  {
+    "name": "termux-torch",
+    "category": "Termux API",
+    "summary": "Включает/выключает фонарик.",
+    "description": "Управление вспышкой камеры как фонариком.",
+    "syntax": "termux-torch on|off",
+    "requires": ["termux-api"],
+    "tags": ["камера"]
+  },
+  {
+    "name": "termux-tts-engines",
+    "category": "Termux API",
+    "summary": "Список TTS-движков.",
+    "description": "Показывает доступные синтезаторы речи.",
+    "syntax": "termux-tts-engines",
+    "requires": ["termux-api"],
+    "related": ["termux-tts-speak"],
+    "tags": ["tts"]
+  },
+  {
+    "name": "termux-tts-speak",
+    "category": "Termux API",
+    "summary": "Озвучивание текста.",
+    "description": "Синтез речи из текста.",
+    "syntax": "termux-tts-speak -e ru-RU 'Привет из Termux'",
+    "requires": ["termux-api"],
+    "tags": ["tts"]
+  },
+  {
+    "name": "termux-usb",
+    "category": "Termux API",
+    "summary": "Доступ к USB-устройствам.",
+    "description": "Список и взаимодействие с USB-устройствами в режиме OTG.",
+    "syntax": "termux-usb -l",
+    "requires": ["termux-api"],
+    "tags": ["usb"]
+  },
+  {
+    "name": "termux-vibrate",
+    "category": "Termux API",
+    "summary": "Вибрация устройства.",
+    "description": "Вызывает вибросигнал указанной длительности.",
+    "syntax": "termux-vibrate -d 200",
+    "requires": ["termux-api"],
+    "tags": ["вибрация"]
+  },
+  {
+    "name": "termux-volume",
+    "category": "Termux API",
+    "summary": "Регулировка громкости.",
+    "description": "Изменяет уровень указанного канала громкости.",
+    "syntax": "termux-volume music 5",
+    "requires": ["termux-api"],
+    "tags": ["звук"]
+  },
+  {
+    "name": "termux-wake-lock",
+    "category": "Termux API",
+    "summary": "Запрет сна (не даёт устройству спать).",
+    "description": "Удерживает устройство активным до снятия блокировки.",
+    "syntax": "termux-wake-lock",
+    "requires": ["termux-api"],
+    "related": ["termux-wake-unlock"],
+    "tags": ["энергосбережение"]
+  },
+  {
+    "name": "termux-wake-unlock",
+    "category": "Termux API",
+    "summary": "Снятие запрета сна.",
+    "description": "Освобождает wake lock.",
+    "syntax": "termux-wake-unlock",
+    "requires": ["termux-api"],
+    "tags": ["энергосбережение"]
+  },
+  {
+    "name": "termux-wifi-connectioninfo",
+    "category": "Termux API",
+    "summary": "Информация о Wi‑Fi подключении.",
+    "description": "Показывает SSID, уровень сигнала и прочие параметры.",
+    "syntax": "termux-wifi-connectioninfo",
+    "requires": ["termux-api"],
+    "related": ["termux-wifi-scaninfo"],
+    "tags": ["wifi", "сеть"]
+  },
+  {
+    "name": "termux-wifi-enable",
+    "category": "Termux API",
+    "summary": "Включает/выключает Wi‑Fi (если разрешено системой).",
+    "description": "Переключает состояние Wi‑Fi на устройстве.",
+    "syntax": "termux-wifi-enable true|false",
+    "requires": ["termux-api"],
+    "tags": ["wifi"]
+  },
+  {
+    "name": "termux-wifi-scaninfo",
+    "category": "Termux API",
+    "summary": "Результаты сканирования Wi‑Fi сетей.",
+    "description": "Показывает список доступных точек доступа.",
+    "syntax": "termux-wifi-scaninfo",
+    "requires": ["termux-api"],
+    "tags": ["wifi", "сканирование"]
+  },
+
+  { "name": "ls", "category": "Базовые Linux", "summary": "Список файлов и каталогов.", "description": "Показывает содержимое каталога.", "syntax": "ls [опции] [путь]", "options": [ { "flag": "-l", "desc": "Длинный формат" }, { "flag": "-a", "desc": "Все, включая скрытые" } ], "examples": [ { "desc": "Подробный список", "cmd": "ls -la" } ], "tags": ["файлы"] },
+  { "name": "cd", "category": "Базовые Linux", "summary": "Сменить каталог.", "description": "Переходит в указанный каталог.", "syntax": "cd <путь>", "examples": [ { "desc": "Домашняя папка", "cmd": "cd ~" } ], "tags": ["файлы"] },
+  { "name": "pwd", "category": "Базовые Linux", "summary": "Показать текущий путь.", "description": "Выводит текущий рабочий каталог.", "syntax": "pwd", "tags": ["файлы"] },
+  { "name": "cp", "category": "Файлы", "summary": "Копирование файлов и каталогов.", "description": "Копирует файлы/папки.", "syntax": "cp [опции] источник назначение", "options": [ { "flag": "-r", "desc": "Рекурсивно" }, { "flag": "-i", "desc": "Запрашивать подтверждение" } ], "examples": [ { "desc": "Скопировать папку", "cmd": "cp -r src dir/" } ] },
+  { "name": "mv", "category": "Файлы", "summary": "Перемещение/переименование.", "description": "Переносит или переименовывает файлы.", "syntax": "mv источник назначение" },
+  { "name": "rm", "category": "Файлы", "summary": "Удаление файлов и каталогов.", "description": "Удаляет файлы/папки. Будьте осторожны.", "syntax": "rm [опции] путь", "options": [ { "flag": "-r", "desc": "Рекурсивно" }, { "flag": "-f", "desc": "Без подтверждений" } ], "examples": [ { "desc": "Удалить папку", "cmd": "rm -rf build" } ] },
+  { "name": "mkdir", "category": "Файлы", "summary": "Создать каталог.", "description": "Создаёт один или несколько каталогов.", "syntax": "mkdir [-p] путь", "examples": [ { "desc": "Создать с родительскими", "cmd": "mkdir -p a/b/c" } ] },
+  { "name": "touch", "category": "Файлы", "summary": "Создать пустой файл или обновить время.", "description": "Создаёт файл, если он не существует.", "syntax": "touch файл" },
+  { "name": "cat", "category": "Файлы", "summary": "Вывод содержимого файла.", "description": "Печатает файл в stdout.", "syntax": "cat файл" },
+  { "name": "less", "category": "Файлы", "summary": "Постраничный просмотр.", "description": "Удобный просмотр больших файлов.", "syntax": "less файл" },
+  { "name": "head", "category": "Файлы", "summary": "Первые строки файла.", "description": "Показывает начало файла.", "syntax": "head [-n N] файл" },
+  { "name": "tail", "category": "Файлы", "summary": "Последние строки/следить за логом.", "description": "Показывает конец файла.", "syntax": "tail [-f] файл" },
+  { "name": "grep", "category": "Текст", "summary": "Поиск по тексту с регулярными выражениями.", "description": "Фильтрует строки по шаблону.", "syntax": "grep [опции] шаблон [файлы]" },
+  { "name": "find", "category": "Файлы", "summary": "Поиск файлов по критериям.", "description": "Рекурсивный поиск по каталогу.", "syntax": "find путь [условия]" },
+  { "name": "chmod", "category": "Система", "summary": "Изменение прав доступа.", "description": "Задаёт режим доступа к файлам.", "syntax": "chmod режим файл" },
+  { "name": "chown", "category": "Система", "summary": "Смена владельца файла.", "description": "Назначает владельца/группу.", "syntax": "chown user:group файл" },
+  { "name": "ps", "category": "Система", "summary": "Просмотр процессов.", "description": "Выводит список процессов.", "syntax": "ps aux" },
+  { "name": "kill", "category": "Система", "summary": "Отправка сигналов процессам.", "description": "Завершение процессов по PID.", "syntax": "kill [-9] PID" },
+  { "name": "top", "category": "Система", "summary": "Мониторинг процессов.", "description": "Интерактивный просмотр нагрузки.", "syntax": "top" },
+  { "name": "htop", "category": "Система", "summary": "Улучшенный мониторинг процессов.", "description": "Цветной интерактивный мониторинг.", "syntax": "htop" },
+  { "name": "free", "category": "Система", "summary": "Статистика памяти.", "description": "Показывает RAM и swap.", "syntax": "free -h" },
+  { "name": "df", "category": "Система", "summary": "Занятое место на дисках.", "description": "Выводит использование диска.", "syntax": "df -h" },
+  { "name": "du", "category": "Система", "summary": "Размеры каталогов/файлов.", "description": "Суммарный объём.", "syntax": "du -sh *" },
+  { "name": "curl", "category": "Сеть", "summary": "HTTP(S) запросы из командной строки.", "description": "Загрузка и отправка данных по URL.", "syntax": "curl [опции] URL" },
+  { "name": "wget", "category": "Сеть", "summary": "Загрузка файлов по HTTP(S).",
+    "description": "Качает файлы по URL.", "syntax": "wget URL" },
+  { "name": "ssh", "category": "Сеть", "summary": "Подключение к удалённым серверам.", "description": "Клиент SSH.", "syntax": "ssh [опции] user@host" },
+  { "name": "scp", "category": "Сеть", "summary": "Копирование файлов по SSH.", "description": "Безопасная передача файлов.", "syntax": "scp файл user@host:путь" },
+  { "name": "tar", "category": "Архивы", "summary": "Архивирование/распаковка tar.", "description": "Создание и извлечение tar-архивов.", "syntax": "tar -czf архив.tar.gz папка" },
+  { "name": "zip", "category": "Архивы", "summary": "Создание zip-архивов.", "description": "Упаковка файлов в zip.", "syntax": "zip -r архив.zip папка" },
+  { "name": "unzip", "category": "Архивы", "summary": "Распаковка zip-архивов.", "description": "Извлечение zip.", "syntax": "unzip архив.zip" },
+  { "name": "nano", "category": "Редакторы", "summary": "Простой консольный редактор.", "description": "Удобный редактор для быстрых правок.", "syntax": "nano файл" },
+  { "name": "vim", "category": "Редакторы", "summary": "Мощный редактор Vim.", "description": "Продвинутый модальный редактор.", "syntax": "vim файл" },
+  { "name": "git", "category": "Разработка", "summary": "Система контроля версий.", "description": "Управление репозиториями Git.", "syntax": "git [подкоманды]" },
+  { "name": "python", "category": "Разработка", "summary": "Интерпретатор Python.", "description": "Запуск Python-скриптов.", "syntax": "python script.py" },
+  { "name": "node", "category": "Разработка", "summary": "Запуск JavaScript (Node.js).", "description": "Node.js среда выполнения.", "syntax": "node файл.js" },
+
+  { "name": "proot-distro", "category": "Termux", "summary": "Установка и управление дистрибутивами Linux в Termux.", "description": "Проект PRoot позволяет запускать окружения Linux без root. Утилита proot-distro устанавливает и управляет образами (Ubuntu, Debian и др.).", "syntax": "proot-distro [install|login|list|remove] [имя]", "examples": [ { "desc": "Установить Ubuntu", "cmd": "proot-distro install ubuntu" }, { "desc": "Войти в окружение", "cmd": "proot-distro login ubuntu" } ], "tags": ["linux", "proot"] },
+  { "name": "termux-info", "category": "Termux", "summary": "Диагностическая информация о среде Termux.", "description": "Печатает версии, архитектуру, пути и т.п. Полезно для отладки.", "syntax": "termux-info" },
+  { "name": "termux-reload-settings", "category": "Termux", "summary": "Перезагрузить настройки терминала.", "description": "Применяет изменения настроек без перезапуска.", "syntax": "termux-reload-settings" },
+  { "name": "termux-fix-shebang", "category": "Termux", "summary": "Исправляет shebang в скриптах.", "description": "Заменяет пути интерпретаторов на совместимые с Termux.", "syntax": "termux-fix-shebang script.sh" }
+]

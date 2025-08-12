@@ -1,0 +1,21 @@
+:root{--bg:#0b0f1a;--panel:#111828;--text:#e5e7eb;--muted:#9ca3af;--accent:#60a5fa}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.site-header{position:sticky;top:0;background:rgba(17,24,40,.7);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid #1f2937}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{color:var(--text);text-decoration:none;font-weight:700}
+.nav{display:flex;gap:16px}
+.nav-link{color:var(--muted);text-decoration:none}
+.nav-link:hover{color:var(--text)}
+.hero{padding:80px 0}
+.hero h1{font-size:48px;margin:0 0 12px}
+.content-block{padding:48px 0}
+.contact-form{display:grid;gap:16px}
+.contact-form .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label span{display:block;margin:0 0 6px;color:var(--muted);font-size:14px}
+input,textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #1f2937;background:#0e1525;color:var(--text)}
+button{padding:12px 18px;border-radius:10px;background:var(--accent);border:none;color:#0b0f1a;font-weight:700;cursor:pointer}
+.site-footer{border-top:1px solid #1f2937;margin-top:48px}
+@media (max-width:700px){.contact-form .grid{grid-template-columns:1fr}}

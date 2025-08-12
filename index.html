@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termux Guide - Complete Command Reference</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-terminal"></i>
+                <span>Termux Guide</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#commands" class="nav-link">Commands</a>
+                <a href="#packages" class="nav-link">Packages</a>
+                <a href="#tutorials" class="nav-link">Tutorials</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Master Termux</h1>
+                <p class="hero-subtitle">The ultimate guide to Linux commands on Android</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('commands')">
+                        <i class="fas fa-terminal"></i>
+                        Explore Commands
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('tutorials')">
+                        <i class="fas fa-graduation-cap"></i>
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+            <div class="hero-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="terminal-btn close"></span>
+                        <span class="terminal-btn minimize"></span>
+                        <span class="terminal-btn maximize"></span>
+                    </div>
+                    <div class="terminal-title">termux@android</div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">pkg update && pkg upgrade</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output">Updating package list...</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">ls -la</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="output">total 8<br>drwx------ 2 u0_a123 u0_a123 4096 Jan 1 12:00 .<br>drwx------ 3 u0_a123 u0_a123 4096 Jan 1 12:00 ..</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command blink">_</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <i class="fas fa-code"></i>
+                <h3>500+</h3>
+                <p>Commands</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-box"></i>
+                <h3>1000+</h3>
+                <p>Packages</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <h3>50K+</h3>
+                <p>Users</p>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-book"></i>
+                <h3>100+</h3>
+                <p>Tutorials</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section id="commands" class="commands">
+        <div class="container">
+            <div class="section-header">
+                <h2>Essential Commands</h2>
+                <p>Master the most important Termux commands for daily use</p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="commandSearch" placeholder="Search commands...">
+                    <button class="search-clear" id="searchClear">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="basic">Basic</button>
+                    <button class="filter-btn" data-category="file">File Management</button>
+                    <button class="filter-btn" data-category="system">System</button>
+                    <button class="filter-btn" data-category="network">Network</button>
+                    <button class="filter-btn" data-category="package">Package Management</button>
+                </div>
+            </div>
+
+            <!-- Commands Grid -->
+            <div class="commands-grid" id="commandsGrid">
+                <!-- Commands will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="packages">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Packages</h2>
+                <p>Essential packages to enhance your Termux experience</p>
+            </div>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Python</h3>
+                    <p>Python programming language with pip package manager</p>
+                    <div class="package-command">
+                        <code>pkg install python</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pkg install python')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fab fa-node-js"></i>
+                    </div>
+                    <h3>Node.js</h3>
+                    <p>JavaScript runtime for server-side development</p>
+                    <div class="package-command">
+                        <code>pkg install nodejs</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pkg install nodejs')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>SQLite</h3>
+                    <p>Lightweight database engine</p>
+                    <div class="package-command">
+                        <code>pkg install sqlite</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pkg install sqlite')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Nginx</h3>
+                    <p>High-performance web server</p>
+                    <div class="package-command">
+                        <code>pkg install nginx</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pkg install nginx')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-git-alt"></i>
+                    </div>
+                    <h3>Git</h3>
+                    <p>Version control system</p>
+                    <div class="package-command">
+                        <code>pkg install git</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pkg install git')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <h3>Zsh</h3>
+                    <p>Advanced shell with better features</p>
+                    <div class="package-command">
+                        <code>pkg install zsh</code>
+                        <button class="copy-btn" onclick="copyToClipboard('pkg install zsh')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section id="tutorials" class="tutorials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Getting Started</h2>
+                <p>Step-by-step tutorials to get you started with Termux</p>
+            </div>
+            <div class="tutorials-grid">
+                <div class="tutorial-card">
+                    <div class="tutorial-number">01</div>
+                    <h3>Installation & Setup</h3>
+                    <p>Learn how to install Termux and configure your environment</p>
+                    <ul>
+                        <li>Download from F-Droid</li>
+                        <li>Initial setup and permissions</li>
+                        <li>Update package repositories</li>
+                        <li>Install essential packages</li>
+                    </ul>
+                    <button class="btn btn-outline">Read More</button>
+                </div>
+                <div class="tutorial-card">
+                    <div class="tutorial-number">02</div>
+                    <h3>Basic Navigation</h3>
+                    <p>Master file system navigation and basic commands</p>
+                    <ul>
+                        <li>Understanding the file system</li>
+                        <li>cd, ls, pwd commands</li>
+                        <li>File and directory operations</li>
+                        <li>Working with paths</li>
+                    </ul>
+                    <button class="btn btn-outline">Read More</button>
+                </div>
+                <div class="tutorial-card">
+                    <div class="tutorial-number">03</div>
+                    <h3>Package Management</h3>
+                    <p>Learn how to install and manage software packages</p>
+                    <ul>
+                        <li>Using pkg command</li>
+                        <li>Finding packages</li>
+                        <li>Updating and upgrading</li>
+                        <li>Removing packages</li>
+                    </ul>
+                    <button class="btn btn-outline">Read More</button>
+                </div>
+                <div class="tutorial-card">
+                    <div class="tutorial-number">04</div>
+                    <h3>Text Editing</h3>
+                    <p>Edit files using command-line text editors</p>
+                    <ul>
+                        <li>Nano editor basics</li>
+                        <li>Vim fundamentals</li>
+                        <li>Creating and editing files</li>
+                        <li>Search and replace</li>
+                    </ul>
+                    <button class="btn btn-outline">Read More</button>
+                </div>
+                <div class="tutorial-card">
+                    <div class="tutorial-number">05</div>
+                    <h3>Network Tools</h3>
+                    <p>Use network utilities and tools</p>
+                    <ul>
+                        <li>ping and traceroute</li>
+                        <li>curl and wget</li>
+                        <li>SSH connections</li>
+                        <li>Network monitoring</li>
+                    </ul>
+                    <button class="btn btn-outline">Read More</button>
+                </div>
+                <div class="tutorial-card">
+                    <div class="tutorial-number">06</div>
+                    <h3>Development Setup</h3>
+                    <p>Set up a development environment</p>
+                    <ul>
+                        <li>Installing programming languages</li>
+                        <li>Setting up IDEs</li>
+                        <li>Version control with Git</li>
+                        <li>Database setup</li>
+                    </ul>
+                    <button class="btn btn-outline">Read More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Termux</h2>
+                    <p>Termux is an Android terminal emulator and Linux environment app that works directly with no rooting or setup required. A minimal base system is installed automatically - additional packages are available using the APT package manager.</p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Secure</h4>
+                            <p>Runs in isolated environment</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-rocket"></i>
+                            <h4>Fast</h4>
+                            <p>Optimized for mobile performance</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-puzzle-piece"></i>
+                            <h4>Extensible</h4>
+                            <p>Thousands of packages available</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="mockup-terminal">
+                                <div class="mockup-header">
+                                    <span class="mockup-title">Termux</span>
+                                </div>
+                                <div class="mockup-content">
+                                    <div class="mockup-line">$ pkg update</div>
+                                    <div class="mockup-line">$ python3</div>
+                                    <div class="mockup-line">>>> print("Hello World")</div>
+                                    <div class="mockup-line">Hello World</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Termux Guide</h3>
+                    <p>Your complete resource for mastering Termux on Android</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#commands">Commands</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#tutorials">Tutorials</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Official Documentation</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">GitHub Repository</a></li>
+                        <li><a href="#">Bug Reports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Donate</a></li>
+                        <li><a href="#">Contributing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Termux Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+{
+  "commands": [
+    {
+      "name": "Update package lists",
+      "syntax": "apt update && apt upgrade -y",
+      "description": "Refresh repository indexes and upgrade all installed packages to their latest versions.",
+      "category": "Package Management",
+      "tags": ["apt", "update", "upgrade"],
+      "examples": [
+        { "title": "Update only", "command": "apt update" },
+        { "title": "Full upgrade", "command": "apt update && apt full-upgrade -y" }
+      ]
+    },
+    {
+      "name": "Install a package",
+      "syntax": "pkg install <package>",
+      "description": "Install packages using Termux's convenience wrapper around apt.",
+      "category": "Package Management",
+      "tags": ["pkg", "install"],
+      "examples": [
+        { "title": "Install Git", "command": "pkg install git" },
+        { "title": "Install Python", "command": "pkg install python" }
+      ]
+    },
+    {
+      "name": "Setup storage access",
+      "syntax": "termux-setup-storage",
+      "description": "Grant Termux access to shared storage (/sdcard). Required for reading/writing device files.",
+      "category": "System",
+      "tags": ["storage", "permissions"]
+    },
+    {
+      "name": "Show environment info",
+      "syntax": "termux-info",
+      "description": "Print detailed info about your Termux environment and device.",
+      "category": "System",
+      "tags": ["diagnostics", "version"]
+    },
+    {
+      "name": "Acquire wake lock",
+      "syntax": "termux-wake-lock",
+      "description": "Prevent device from sleeping while a long-running task is active.",
+      "category": "System",
+      "tags": ["power", "background"],
+      "examples": [
+        { "title": "Release wake lock", "command": "termux-wake-unlock" }
+      ]
+    },
+    {
+      "name": "Fix shebang lines",
+      "syntax": "termux-fix-shebang <script>",
+      "description": "Rewrite a script's shebang to use Termux's correct interpreter path.",
+      "category": "Scripting",
+      "tags": ["shebang", "scripts"]
+    },
+    {
+      "name": "Start SSH daemon",
+      "syntax": "sshd",
+      "description": "Start the OpenSSH server to allow SSH connections into your device.",
+      "category": "Networking",
+      "tags": ["ssh", "server"],
+      "examples": [
+        { "title": "Set password", "command": "passwd" },
+        { "title": "Connect from another device", "command": "ssh -p 8022 $USER@<device-ip>" }
+      ]
+    },
+    {
+      "name": "SSH to a server",
+      "syntax": "ssh user@host",
+      "description": "Connect to a remote server via SSH.",
+      "category": "Networking",
+      "tags": ["ssh", "client"],
+      "examples": [
+        { "title": "Custom port", "command": "ssh -p 22 user@host" },
+        { "title": "With key", "command": "ssh -i ~/.ssh/id_rsa user@host" }
+      ]
+    },
+    {
+      "name": "Install a Linux distro (proot)",
+      "syntax": "proot-distro install ubuntu",
+      "description": "Install Ubuntu in a PRoot container to run a full Linux userspace.",
+      "category": "Proot",
+      "tags": ["proot", "ubuntu"],
+      "examples": [
+        { "title": "List available distros", "command": "proot-distro list" },
+        { "title": "Login to Ubuntu", "command": "proot-distro login ubuntu" }
+      ]
+    },
+    {
+      "name": "Clone a repository",
+      "syntax": "git clone <url>",
+      "description": "Download a Git repository to your Termux home directory.",
+      "category": "Git",
+      "tags": ["git", "clone"],
+      "examples": [
+        { "title": "Clone with SSH", "command": "git clone git@github.com:user/repo.git" }
+      ]
+    },
+    {
+      "name": "Edit a file (nano)",
+      "syntax": "nano <file>",
+      "description": "Open a file in nano editor. Good for quick edits.",
+      "category": "Editors",
+      "tags": ["nano", "edit"]
+    },
+    {
+      "name": "Edit a file (vim)",
+      "syntax": "vim <file>",
+      "description": "Open a file in Vim editor.",
+      "category": "Editors",
+      "tags": ["vim", "edit"]
+    },
+    {
+      "name": "Move between directories",
+      "syntax": "cd <path>",
+      "description": "Change the current directory.",
+      "category": "Filesystem",
+      "tags": ["cd", "navigation"],
+      "examples": [
+        { "title": "Home directory", "command": "cd ~" },
+        { "title": "Shared storage", "command": "cd /sdcard" }
+      ]
+    },
+    {
+      "name": "List files",
+      "syntax": "ls -la",
+      "description": "List directory contents with details, including hidden files.",
+      "category": "Filesystem",
+      "tags": ["ls", "list"]
+    },
+    {
+      "name": "Copy files",
+      "syntax": "cp <source> <dest>",
+      "description": "Copy a file or directory.",
+      "category": "Filesystem",
+      "tags": ["cp", "copy"],
+      "examples": [
+        { "title": "Copy a directory recursively", "command": "cp -r dir1 dir2" }
+      ]
+    },
+    {
+      "name": "Move/Rename files",
+      "syntax": "mv <source> <dest>",
+      "description": "Move or rename files and directories.",
+      "category": "Filesystem",
+      "tags": ["mv", "move", "rename"]
+    },
+    {
+      "name": "Remove files",
+      "syntax": "rm <path>",
+      "description": "Delete files. Use with caution.",
+      "category": "Filesystem",
+      "tags": ["rm", "delete"],
+      "examples": [
+        { "title": "Remove directory recursively", "command": "rm -rf <dir>" }
+      ]
+    },
+    {
+      "name": "Python REPL",
+      "syntax": "python",
+      "description": "Start the Python interpreter.",
+      "category": "Languages",
+      "tags": ["python", "repl"],
+      "examples": [
+        { "title": "Install pip packages", "command": "pip install requests" }
+      ]
+    },
+    {
+      "name": "Node.js REPL",
+      "syntax": "node",
+      "description": "Start the Node.js REPL.",
+      "category": "Languages",
+      "tags": ["node", "javascript"]
+    },
+    {
+      "name": "Create directories",
+      "syntax": "mkdir -p <path>",
+      "description": "Create a directory, using -p to create parents as needed.",
+      "category": "Filesystem",
+      "tags": ["mkdir", "directories"]
+    },
+    {
+      "name": "Download file",
+      "syntax": "curl -L -o <output> <url>",
+      "description": "Download files via HTTP(S). Use -L to follow redirects.",
+      "category": "Networking",
+      "tags": ["curl", "download"]
+    },
+    {
+      "name": "Show processes",
+      "syntax": "top",
+      "description": "Display running processes and CPU/memory usage.",
+      "category": "System",
+      "tags": ["top", "process"]
+    },
+    {
+      "name": "Find files",
+      "syntax": "find . -name \"<pattern>\"",
+      "description": "Search for files by name starting from current directory.",
+      "category": "Filesystem",
+      "tags": ["find", "search"]
+    },
+    {
+      "name": "Search in files",
+      "syntax": "grep -R \"<text>\" <path>",
+      "description": "Recursively search for text within files.",
+      "category": "Filesystem",
+      "tags": ["grep", "search"]
+    },
+    {
+      "name": "Zip files",
+      "syntax": "zip -r archive.zip <path>",
+      "description": "Create a zip archive from a directory.",
+      "category": "Filesystem",
+      "tags": ["zip", "archive"]
+    },
+    {
+      "name": "Unzip files",
+      "syntax": "unzip archive.zip -d <dest>",
+      "description": "Extract a zip archive to a destination directory.",
+      "category": "Filesystem",
+      "tags": ["unzip", "archive"]
+    },
+    {
+      "name": "Check disk usage",
+      "syntax": "du -sh <path>",
+      "description": "Summarize disk usage of a file or directory.",
+      "category": "System",
+      "tags": ["du", "disk"]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f0f10" />
+    <meta name="description" content="Modern, user-friendly Termux commands and tips with search, filters, and offline support." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Termux Guide</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-left">
+        <img class="logo" src="assets/logo.svg" alt="Termux Guide" />
+        <h1 class="title">Termux Guide</h1>
+      </div>
+      <div class="header-right">
+        <button id="themeToggle" class="icon-btn" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="icon">🌙</span>
+        </button>
+        <button id="installBtn" class="primary-btn" hidden>Add to Home</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="utility-bar">
+        <div class="search-group">
+          <span class="search-icon">🔎</span>
+          <input id="searchInput" type="search" inputmode="search" autocomplete="off" placeholder="Search commands, e.g. pkg install, ssh, storage..." aria-label="Search commands" />
+          <button id="clearSearch" class="icon-btn" aria-label="Clear search" title="Clear search">✕</button>
+        </div>
+        <div class="chips" id="categoryChips" aria-label="Command categories"></div>
+      </section>
+
+      <section class="tips" id="tips">
+        <div class="tip-card">
+          <div class="tip-icon">📱</div>
+          <div class="tip-content">
+            <h3>Optimized for Android</h3>
+            <p>Responsive UI with large touch targets, safe-area insets, offline support, and installable as an app.</p>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">⚡</div>
+          <div class="tip-content">
+            <h3>Quick Copy</h3>
+            <p>Tap the copy button on any command to paste it into Termux quickly.</p>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🔒</div>
+          <div class="tip-content">
+            <h3>No Internet? No Problem</h3>
+            <p>Works offline after the first visit. Add to Home for a native-like experience.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="results-header">
+        <h2 class="section-title">Commands</h2>
+        <div id="resultCount" class="result-count">Loading…</div>
+      </section>
+
+      <section id="commandsGrid" class="grid"></section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="footer-content">
+        <span>Made for Termux users • <a href="https://termux.dev" target="_blank" rel="noopener">Official docs</a></span>
+        <span>Install this site: Menu → Add to Home</span>
+      </div>
+    </footer>
+
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
